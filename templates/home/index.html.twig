@@ -5,6 +5,8 @@
 {% block body %}
     <main class="container">
         <h1 class="text-center my-4">{{ 'home.title'|trans }}</h1>
+        <a href="{{ path('new_post')}}" class="btn btn-dark text-center text-decoration-none me-5">Créer un post</a>
+        <a href="{{ path('new_thread')}}" class="btn btn-dark text-center text-decoration-none">Créer un thread</a>
         <div class="row mb-5">
             <div>
                 <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi eligendi, enim, et eveniet,

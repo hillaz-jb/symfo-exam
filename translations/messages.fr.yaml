@@ -15,3 +15,5 @@ login:
   title: 'Connexion'
 register:
   title: 'Inscription'
+category:
+  title: 'Catégories'

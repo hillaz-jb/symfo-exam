@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\Thread;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,11 +22,21 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getHierarchizeCategories($idParent): array {
+        return $this->createQueryBuilder('category')
+            ->select('category')
+            ->where('category.id_parent = :val')
+            ->setParameter('val', $idParent)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */
     /*
-    public function findByExampleField($value)
+    public function getChildrenCategories($value)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

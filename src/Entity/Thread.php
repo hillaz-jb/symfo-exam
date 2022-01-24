@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ThreadRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,23 +14,23 @@ class Thread
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $subject;
+    private string $subject;
 
     #[ORM\Column(type: 'datetime')]
-    private $createdAt;
+    private DateTime $createdAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'threads')]
-    private $user;
+    private User $user;
+
+    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: Post::class)]
+    private Collection $posts;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'threads')]
     #[ORM\JoinColumn(nullable: false)]
-    private $category;
-
-    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: Post::class)]
-    private $posts;
+    private Category $category;
 
     public function __construct()
     {
@@ -53,12 +54,12 @@ class Thread
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -73,18 +74,6 @@ class Thread
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -115,6 +104,18 @@ class Thread
                 $post->setThread(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

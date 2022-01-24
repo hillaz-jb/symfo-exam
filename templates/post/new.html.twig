@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+{% block body %}
+    <main class="container">
+        <h1 class="text-center my-4">Ajouter un article</h1>
+        <div class="row mb-5">
+            <div class="col-6 offset-3">
+                {% if isThreads == false %}
+                    <a href="{{ path('new_thread')}}" class="btn btn-dark text-center text-decoration-none">Créer un thread</a>
+                {% else %}
+                    {{ form_start(form) }}
+                    {{ form_row(form.content) }}
+                    {{ form_row(form.thread) }}
+                    <a href="{{ path('new_thread')}}" class="btn btn-dark text-center text-decoration-none">Créer un thread</a>
+                    {{ form_row(form.submit) }}
+                    {{ form_end(form) }}
+                {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

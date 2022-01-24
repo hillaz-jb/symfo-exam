@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ForumBooster{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h1 class="text-center my-4">{{ 'category.title'|trans }}</h1>
+
+        <h2 class="text-center">Catégories principales</h2>
+        {% for category in categories  %}
+            <div>
+                {% if category.parent is  null %}
+                    <h3>{{ category.name }}</h3>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <h2 class="text-center">Sous-Catégories</h2>
+        {% for category in categories  %}
+            <div class="mb-3">
+                {% if category.parent is not null %}
+                    <h3 class="mt-3">{{ category.name }}</h3>
+                    <p>Catégories : {{ category.parent.name }}</p>
+                    <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-dark text-center text-decoration-none mb-4">Voir</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+
+    </main>
+{% endblock %}

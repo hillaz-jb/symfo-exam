@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <h1 class="text-center my-4">{{ category.name }}</h1>
+        <div>
+            {{ category.description }}
+        </div>
+        {% if category.threads is not null %}
+            {% for thread in category.threads  %}
+                <h2>{{ thread.subject }}</h2>
+                {% if thread.posts is not null %}
+                    {% for post in thread.posts %}
+                        <p>{{ post.content }}</p>
+                        <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-dark text-center text-decoration-none mb-4">Editer</a>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </main>
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

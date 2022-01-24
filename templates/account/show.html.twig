@@ -5,7 +5,20 @@
 {% endblock %}
 
 {% block body %}
-<p>{{ user.email }}</p>
+    <main class="container">
+        <p>{{ user.email }}</p>
+        <div>
+            {% for post in pagination %}
+                <div class="my-3">
+                    <a href="{{ path('thread_show', {'id': post.id}) }}" class="border border-dark text-center text-decoration-none mb-4">{{ post.content }}</a>
+                </div>
+            {% endfor %}
+            <div class="pagination">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </main>
+
 {% endblock %}
 
 

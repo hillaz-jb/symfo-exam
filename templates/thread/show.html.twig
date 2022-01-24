@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <h1 class="text-center my-4">{{ thread.subject }}</h1>
+        {% if thread.posts is not null %}
+            {% for post in thread.posts  %}
+                <h2>{{ post.content }}</h2>
+            {% endfor %}
+        {% endif %}
+    </main>
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
