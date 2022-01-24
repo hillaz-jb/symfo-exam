@@ -28,9 +28,13 @@ class Category
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $id_parent;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Thread::class)]
+    private $threads;
+
     #[Pure] public function __construct()
     {
         $this->id_parent = new ArrayCollection();
+        $this->threads = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +101,36 @@ class Category
         if ($this->id_parent->removeElement($idParent)) {
             if ($idParent->getParent() === $this) {
                 $idParent->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Thread[]
+     */
+    public function getThreads(): Collection
+    {
+        return $this->threads;
+    }
+
+    public function addThread(Thread $thread): self
+    {
+        if (!$this->threads->contains($thread)) {
+            $this->threads[] = $thread;
+            $thread->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThread(Thread $thread): self
+    {
+        if ($this->threads->removeElement($thread)) {
+            // set the owning side to null (unless already changed)
+            if ($thread->getCategory() === $this) {
+                $thread->setCategory(null);
             }
         }
 
