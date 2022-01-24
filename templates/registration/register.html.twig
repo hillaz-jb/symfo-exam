@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
-
+{% block title %}{{ 'register.title'|trans }}{% endblock %}
+{% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <main class="container">
+        <h1 class="text-center my-4">{{ 'register.title'|trans }}</h1>
+        <div class="row mb-5">
+            <div class="col-6 offset-3">
+                {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                {{ form_row(registrationForm.firstName ) }}
+                {{ form_row(registrationForm.lastName ) }}
+                {{ form_row(registrationForm.nickName ) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </main>
 {% endblock %}

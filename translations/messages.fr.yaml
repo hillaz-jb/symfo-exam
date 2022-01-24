@@ -1,0 +1,17 @@
+common:
+  button:
+    submit: "Envoyer"
+  terms:
+    title: "Conditions d'utilisations"
+  userForm:
+    firstName: 'Prénom'
+    lastName: 'Nom'
+    nickName: 'Pseudo'
+    email: 'Email'
+    password: 'Mot de Passe'
+home:
+  title: 'ForumBooster : le partage avant tout'
+login:
+  title: 'Connexion'
+register:
+  title: 'Inscription'
