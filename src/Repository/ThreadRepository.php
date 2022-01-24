@@ -19,6 +19,17 @@ class ThreadRepository extends ServiceEntityRepository
         parent::__construct($registry, Thread::class);
     }
 
+    public function findOrderedThreads(int $categoryId, string $orderField = 'createdAt', string $order = 'DESC'): array {
+        return $this->createQueryBuilder('thread')
+            ->select('thread', 'category')
+            ->join('thread.category', 'category')
+            ->where('category.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('thread.'.$orderField, $order)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Thread[] Returns an array of Thread objects
     //  */

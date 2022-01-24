@@ -20,8 +20,25 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function getQbAll(): QueryBuilder {
-        return $this->createQueryBuilder('post');
+    public function getQbAll($userId): QueryBuilder {
+        return $this->createQueryBuilder('post')
+            ->select('post', 'user')
+            ->join('post.user', 'user')
+            ->where('user.id = :userId')
+            ->setParameter('userId', $userId);
+
+    }
+
+    public function findOrderedPosts(int $threadId, string $orderField = 'createdAt', string $order = 'DESC'): array {
+        return $this->createQueryBuilder('post')
+            ->select('post', 'user', 'thread')
+            ->join('post.thread', 'thread')
+            ->where('thread.id = :threadId')
+            ->setParameter('threadId', $threadId)
+            ->join('post.user', 'user')
+            ->orderBy('post.'.$orderField, $order)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

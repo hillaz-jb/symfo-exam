@@ -37,14 +37,14 @@ class AccountController extends AbstractController
     #[Route('/', name: 'account_show')]
     public function show(Request $request): Response
     {
-        //$form->handleRequest($request);
 
-        $qb = $this->postRepository->getQbAll();
         if ($this->getUser()) {
+            $user = $this->userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+            $qb = $this->postRepository->getQbAll($user->getId());
             $pagination = $this->paginator->paginate($qb, $request->query->getInt('page', 1), 2);
-            $user = $this->getUser();
+
             return $this->render('account/show.html.twig', [
-                'user' => $this->userRepository->findOneBy(['email' => $user->getUserIdentifier()]),
+                'user' => $user,
                 'pagination' => $pagination,
             ]);
         }

@@ -10,27 +10,36 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ path('category_index') }}">Catégories</a>
+                    <a class="nav-link" aria-current="page" href="{{ path('category_index') }}">Catégories</a>
                 </li>
+                <li>
+                    <a class="nav-link" aria-current="page" href="{{ path('new_thread') }}">Créer un thread</a>
+                </li>
+                <li>
+                    <a class="nav-link" aria-current="page"
+                            {% if  app.user %}
+                        href="{{ path('account_show') }}"
+                    {% else %}
+                        href="{{ path('app_login')}}"
+
+                            {% endif %}>Mon compte
+                    </a>
+                </li>
+                {% if app.user %}
+                {% else %}
+                    <li>
+                        <a class="nav-link" aria-current="page" href="{{ path('app_register') }}">S'inscrire</a>
+                    </li>
+                {% endif %}
+
             </ul>
             <span class="navbar-text">
                 {% if app.user %}
                     <span class="text-light me-3">Hello {{ app.user.firstName~' '~app.user.lastName }} !</span>
                     <a class="btn btn-outline-warning" href="{{ path('app_logout') }}">Déconnexion</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn-warning ms-3" href="">Administration</a>
-                    {% endif %}
                 {% else %}
                 <a class="btn btn-outline-warning" href="{{ path('app_login') }}">Se connecter</a>
                 {% endif %}
-                <a class="btn btn-outline-primary ms-3" aria-current="page"
-                            {% if  app.user %}
-                       href="{{ path('account_show') }}"
-                       {% else %}
-                           href="{{ path('app_login')}}"
-
-                        {% endif %}>Mon compte
-                </a>
             </span>
         </div>
     </div>

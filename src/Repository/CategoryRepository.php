@@ -22,42 +22,21 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function getHierarchizeCategories($idParent): array {
+    public function getParentCategories(): array {
         return $this->createQueryBuilder('category')
             ->select('category')
-            ->where('category.id_parent = :val')
-            ->setParameter('val', $idParent)
+            ->where('category.parent IS NULL')
             ->getQuery()
             ->getResult();
     }
 
-
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function getChildrenCategories($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+    public function getChildrenCategories($Parent): array {
+        return $this->createQueryBuilder('category')
+            ->select('category')
+            ->where('category.parent = :val')
+            ->setParameter('val', $Parent)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -3,10 +3,27 @@
 {% block body %}
     <main class="container">
         <h1 class="text-center my-4">{{ thread.subject }}</h1>
+        <a href="{{ path('thread_new_post', {'id': thread.id}) }}" class="btn btn-dark text-center text-decoration-none mb-4">Créer un post</a>
         {% if thread.posts is not null %}
-            {% for post in thread.posts  %}
-                <h2>{{ post.content }}</h2>
-            {% endfor %}
+                {% for post in posts %}
+                    <div class="border border-dark mb-4">
+                        <div class="pt-2 ps-5">
+                            <p>{{ post.content }}</p>
+                        </div>
+                        <div class="d-flex ps-5">
+                            <p class="me-4">Par {{ post.user.nickName }} le {{ post.createdAt|date('d/m/Y') }}</p>
+                            <p class="fs-5">
+                                <span class="text-success me-3"><i class="far fa-thumbs-up"></i> {{ post.upVote }}</span>
+                                <span class="text-danger"><i class="far fa-thumbs-down"></i> {{ post.downVote }}</span>
+                            </p>
+                        </div>
+                        {% if user is not null %}
+                            <div class="mb-4 ps-5">
+                                <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-dark text-center text-decoration-none mb-4">Editer</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
         {% endif %}
     </main>
 
